@@ -6,7 +6,7 @@ A customized RISCV core made using verilog
 1. **Register File**:
 
 <p align="center">
-    <img width="480" height="320" src="../assets/register_file.png">
+    <img width="480" height="320" src="assets/register_file.png">
 </p>
 
 Verilog Code: [Register File](https://github.com/ombhilare999/riscv-core/blob/master/src/register_file.v)
