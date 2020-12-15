@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Tue Dec 15 15:23:04 2020
+Quartus II 32-bit Version : 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
+Revision Name : riscv
+Top-level Entity Name : register_file
+Family : Cyclone II
+Total logic elements : 2,416
+    Total combinational functions : 1,392
+    Dedicated logic registers : 1,024
+Total registers : 1024
+Total pins : 113
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
