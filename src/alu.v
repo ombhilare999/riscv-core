@@ -1,10 +1,10 @@
 ///////////////////////////////////////////
-// Module ALU.v
+// Module alu.v                                            
 // Info:  Verilog Code for ALU
 //        Covers All R - Type Instructions 
 ///////////////////////////////////////////
 
-module ALU
+module alu
 (
     input [31:0] in1,
     input [31:0] in2,

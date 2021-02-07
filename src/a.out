@@ -6,58 +6,59 @@
 :vpi_module "vhdl_sys";
 :vpi_module "v2005_math";
 :vpi_module "va_math";
-S_0x8e8e60 .scope module, "registerfile" "registerfile" 2 3;
+S_0xf6eab0 .scope module, "register_file" "register_file" 2 3;
  .timescale 0 0;
-    .port_info 0 /INPUT 5 "read1"
-    .port_info 1 /INPUT 5 "read2"
-    .port_info 2 /INPUT 5 "writereg"
-    .port_info 3 /INPUT 32 "writedata"
-    .port_info 4 /INPUT 1 "regwrite"
-    .port_info 5 /OUTPUT 1 "data1"
-    .port_info 6 /OUTPUT 1 "data2"
-    .port_info 7 /INPUT 1 "clock"
-v0x8afcd0 .array "RF", 0 31, 31 0;
-v0x8afd90_0 .net *"_s0", 31 0, L_0x90a580;  1 drivers
-v0x9098b0_0 .net *"_s10", 6 0, L_0x90a980;  1 drivers
-L_0x7f9a34a07060 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
-v0x9099a0_0 .net *"_s13", 1 0, L_0x7f9a34a07060;  1 drivers
-v0x909a80_0 .net *"_s2", 6 0, L_0x90a670;  1 drivers
-L_0x7f9a34a07018 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
-v0x909bb0_0 .net *"_s5", 1 0, L_0x7f9a34a07018;  1 drivers
-v0x909c90_0 .net *"_s8", 31 0, L_0x90a880;  1 drivers
-o0x7f9a34a50138 .functor BUFZ 1, C4<z>; HiZ drive
-v0x909d70_0 .net "clock", 0 0, o0x7f9a34a50138;  0 drivers
-v0x909e30_0 .net "data1", 0 0, L_0x90a790;  1 drivers
-v0x909f80_0 .net "data2", 0 0, L_0x90aaf0;  1 drivers
-o0x7f9a34a501c8 .functor BUFZ 5, C4<zzzzz>; HiZ drive
-v0x90a040_0 .net "read1", 4 0, o0x7f9a34a501c8;  0 drivers
-o0x7f9a34a501f8 .functor BUFZ 5, C4<zzzzz>; HiZ drive
-v0x90a120_0 .net "read2", 4 0, o0x7f9a34a501f8;  0 drivers
-o0x7f9a34a50228 .functor BUFZ 1, C4<z>; HiZ drive
-v0x90a200_0 .net "regwrite", 0 0, o0x7f9a34a50228;  0 drivers
-o0x7f9a34a50258 .functor BUFZ 32, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; HiZ drive
-v0x90a2c0_0 .net "writedata", 31 0, o0x7f9a34a50258;  0 drivers
-o0x7f9a34a50288 .functor BUFZ 5, C4<zzzzz>; HiZ drive
-v0x90a3a0_0 .net "writereg", 4 0, o0x7f9a34a50288;  0 drivers
-E_0x8e58a0 .event posedge, v0x909d70_0;
-L_0x90a580 .array/port v0x8afcd0, L_0x90a670;
-L_0x90a670 .concat [ 5 2 0 0], o0x7f9a34a501c8, L_0x7f9a34a07018;
-L_0x90a790 .part L_0x90a580, 0, 1;
-L_0x90a880 .array/port v0x8afcd0, L_0x90a980;
-L_0x90a980 .concat [ 5 2 0 0], o0x7f9a34a501f8, L_0x7f9a34a07060;
-L_0x90aaf0 .part L_0x90a880, 0, 1;
-    .scope S_0x8e8e60;
+    .port_info 0 /INPUT 1 "clock"
+    .port_info 1 /INPUT 1 "read1"
+    .port_info 2 /INPUT 1 "read2"
+    .port_info 3 /INPUT 1 "writereg"
+    .port_info 4 /INPUT 1 "writedata"
+    .port_info 5 /INPUT 1 "regwrite"
+    .port_info 6 /OUTPUT 1 "data1"
+    .port_info 7 /OUTPUT 1 "data2"
+v0xf35cd0 .array "RF", 0 31, 31 0;
+v0xf35d90_0 .net *"_s0", 31 0, L_0xf901c0;  1 drivers
+v0xf8f570_0 .net *"_s10", 6 0, L_0xf905c0;  1 drivers
+L_0x7f40ca0e1060 .functor BUFT 1, C4<000000>, C4<0>, C4<0>, C4<0>;
+v0xf8f660_0 .net *"_s13", 5 0, L_0x7f40ca0e1060;  1 drivers
+v0xf8f740_0 .net *"_s2", 6 0, L_0xf902b0;  1 drivers
+L_0x7f40ca0e1018 .functor BUFT 1, C4<000000>, C4<0>, C4<0>, C4<0>;
+v0xf8f870_0 .net *"_s5", 5 0, L_0x7f40ca0e1018;  1 drivers
+v0xf8f950_0 .net *"_s8", 31 0, L_0xf904c0;  1 drivers
+o0x7f40ca12a138 .functor BUFZ 1, C4<z>; HiZ drive
+v0xf8fa30_0 .net "clock", 0 0, o0x7f40ca12a138;  0 drivers
+v0xf8faf0_0 .net "data1", 0 0, L_0xf903d0;  1 drivers
+v0xf8fc40_0 .net "data2", 0 0, L_0xf90730;  1 drivers
+o0x7f40ca12a1c8 .functor BUFZ 1, C4<z>; HiZ drive
+v0xf8fd00_0 .net "read1", 0 0, o0x7f40ca12a1c8;  0 drivers
+o0x7f40ca12a1f8 .functor BUFZ 1, C4<z>; HiZ drive
+v0xf8fdc0_0 .net "read2", 0 0, o0x7f40ca12a1f8;  0 drivers
+o0x7f40ca12a228 .functor BUFZ 1, C4<z>; HiZ drive
+v0xf8fe80_0 .net "regwrite", 0 0, o0x7f40ca12a228;  0 drivers
+o0x7f40ca12a258 .functor BUFZ 1, C4<z>; HiZ drive
+v0xf8ff40_0 .net "writedata", 0 0, o0x7f40ca12a258;  0 drivers
+o0x7f40ca12a288 .functor BUFZ 1, C4<z>; HiZ drive
+v0xf90000_0 .net "writereg", 0 0, o0x7f40ca12a288;  0 drivers
+E_0xf36300 .event posedge, v0xf8fa30_0;
+L_0xf901c0 .array/port v0xf35cd0, L_0xf902b0;
+L_0xf902b0 .concat [ 1 6 0 0], o0x7f40ca12a1c8, L_0x7f40ca0e1018;
+L_0xf903d0 .part L_0xf901c0, 0, 1;
+L_0xf904c0 .array/port v0xf35cd0, L_0xf905c0;
+L_0xf905c0 .concat [ 1 6 0 0], o0x7f40ca12a1f8, L_0x7f40ca0e1060;
+L_0xf90730 .part L_0xf904c0, 0, 1;
+    .scope S_0xf6eab0;
 T_0 ;
-    %wait E_0x8e58a0;
-    %load/vec4 v0x90a200_0;
+    %wait E_0xf36300;
+    %load/vec4 v0xf8fe80_0;
     %flag_set/vec4 8;
     %jmp/0xz  T_0.0, 8;
-    %load/vec4 v0x90a2c0_0;
-    %load/vec4 v0x90a3a0_0;
+    %load/vec4 v0xf8ff40_0;
+    %pad/u 32;
+    %load/vec4 v0xf90000_0;
     %pad/u 7;
     %ix/vec4 3;
     %ix/load 4, 0, 0; Constant delay
-    %assign/vec4/a/d v0x8afcd0, 0, 4;
+    %assign/vec4/a/d v0xf35cd0, 0, 4;
 T_0.0 ;
     %jmp T_0;
     .thread T_0;
@@ -65,4 +66,4 @@ T_0.0 ;
 :file_names 3;
     "N/A";
     "<interactive>";
-    "registers.v";
+    "register_file.v";
