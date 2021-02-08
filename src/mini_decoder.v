@@ -41,7 +41,7 @@ module mini_decoder
     // - For ALU ops with immediate: funcQual is 0
     //   EXCEPT for shifts ALU ops/funcqual :: then it is instr[30]
 
-    wire funcisshift = (func3 == 3'b0001) || (func3 == 3'b101);
+    wire funcisshift = (func3 == 3'b001) || (func3 == 3'b101);
 
     //The rest of instruction decoding, for the following signals:
     // WriteBackEn
