@@ -1,5 +1,9 @@
-//Verilog Code of Register File
-
+///////////////////////////////////////////
+// Module register_file.v                                            
+// Info:  Verilog Code for register_file
+//        Two Combinational Read  
+//        One clocked Write
+///////////////////////////////////////////
 module register_file 
 (     
     input clock,              //Clock for register 
