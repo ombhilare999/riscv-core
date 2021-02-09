@@ -11,7 +11,7 @@ module compare
     input [31:0] in2,
     input [2:0]   op,
     output reg out
-)
+);
     always @(*) begin
         case(op)
             3'b000:  out = (in1 == in2);                        // BEQ

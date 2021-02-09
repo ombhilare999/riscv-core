@@ -6,25 +6,27 @@
 ///////////////////////////////////////////
 module register_file 
 (     
-    input clock,              //Clock for register 
-    input read1,              //5 Bit address of register 1
-    input read2,              //5 Bit address of register 2
-    input writereg,           //5 Bit Write Register Address 
-    input writedata,          //32 Bit data for write Register
-    input regwrite,           //Control Signal for regwrite
-    output data1,             //Data 1 from register 1 
-    output data2              //Data 2 from register 2
-);
-    reg [31:0] RF [31:0];                       //32 Registers each 32 bits long
+    input             clock,             //Clock for register 
+    input [4:0]       read1,             //5 Bit address of register 1
+    input [4:0]       read2,             //5 Bit address of register 2
+    input [4:0]    writereg,             //5 Bit Write Register Address 
+    input [31:0]  writedata,             //32 Bit data for write Register
+    input              inEn,             //Control Signal for regwrite
 
-    assign data1 = RF[read1];
-    assign data2 = RF[read2];
+    output     [31:0] data1,             //Data 1 from register 1 
+    output     [31:0] data2              //Data 2 from register 2
+);
+    reg [31:0] RF [31:0];                //32 Registers each 32 bits long
+
+    assign data1 = RF[read1];            //This Requires more BRAM resulting in more LUTs
+    assign data2 = RF[read2];            //BRAM is slower, one solution two banks and simultaneous write
 
     always@(posedge clock)
     begin
-        if(regwrite) begin
+        if(inEn) begin
             if(writereg != 0) begin 
                 RF[writereg] <= writedata;
+            end
         end
-    end              
+    end 
 endmodule
