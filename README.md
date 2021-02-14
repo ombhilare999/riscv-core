@@ -1,18 +1,19 @@
 # riscv-core
-A customized RISCV core made using verilog
+A customized RISC-V core made using Verilog
 
-## Verilog Codes for RISCV blocks:
+## RISC-V Core:
 
-1. **Register File**:
+1. **R - Type Instruction Datapath**:
+    - Datapath:
 
-<p align="center">
-    <img width="480" height="320" src="assets/register_file.png">
-</p>
+    <p align="center">
+        <img width="480" height="320" src="assets/datapath.jpeg">
+    </p>
 
-Verilog Code: [Register File](https://github.com/ombhilare999/riscv-core/blob/master/src/register_file.v)
+    - Output:
 
-TO DO:
-1. Hardcore zero register
-2. Add reset and logic to avoid writing in zeroth register.
+    <p align="center">
+        <img width="480" height="320" src="assets/output.jpeg">
+    </p>
 
 
