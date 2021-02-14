@@ -5,14 +5,15 @@
 ///////////////////////////////////////////
 
 module alu
-(
+(   
+    input        clk,
     input [31:0] in1,
     input [31:0] in2,
     input [2:0] func3,    // Control Signal op: [14:12]
     input      opequal,   // Operation Qualification (+/-, Logical/Arithmetic)
     output reg [31:0] out // ALU result
 );
-    always@(*) begin
+    always@(posedge clk) begin
         case(func3)
             3'b000: out = opequal ? in1 - in2 : in1 + in2;                        // ADD/SUB
             3'b010: out = ($signed(in1) < $signed(in2)) ? 32'b1 : 32'b0;          // SLT

@@ -11,9 +11,9 @@ module mini_decoder
    input wire [31:0]          instr,          //The instruction to be deocded 
    
    output reg           writeBackEn,          //Asserted when writing to a reg
-   output wire [4:0] writeBackRegId,          //The register to be written back
-   output wire [4:0]       inRegId1,          //Register output 1
-   output wire [4:0]       inRegId2,          //Register output 2
+   output wire [4:0]             rd,          //The register to be written back
+   output wire [4:0]            rs1,          //Register output 1
+   output wire [4:0]            rs2,          //Register output 2
 
    output [2:0]               func3,         //Operation done by ALU
    output reg              funcQual,         //Operation Qualifier
@@ -23,10 +23,10 @@ module mini_decoder
 
 
     //Decoding:
-    assign writeBackRegId =  instr[11:7];       //Rd Register
-    assign inRegId1       = instr[19:15];       //Rs1 Register
-    assign inRegId2       = instr[24:20];       //Rs2 Register
-    assign func3          = instr[14:12];       //Decides the operation
+    assign rd        =  instr[11:7];       //Rd Register
+    assign rs1       = instr[19:15];       //Rs1 Register
+    assign rs2       = instr[24:20];       //Rs2 Register
+    assign func3     = instr[14:12];       //Decides the operation
 
     /*Five Immediate formats:
     wire [31:0] Iimm = {{21{instr[31]}}, instr[30:20]};

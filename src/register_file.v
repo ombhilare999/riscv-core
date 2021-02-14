@@ -4,6 +4,7 @@
 //        Two Combinational Read  
 //        One clocked Write
 ///////////////////////////////////////////
+
 module register_file 
 (     
     input             clock,             //Clock for register 

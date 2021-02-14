@@ -1,10 +1,10 @@
-///////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 // Module rv32.v   
 //                                         
 // Info:  Verilog Code for rv32I
 //        For R type instructions
 //  
-///////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 
 `include "register_file.v"                  //32 General Purpose Registers
@@ -14,14 +14,15 @@
 
 module rv32
 (
-    input                    clk,  
+    input                      clk,         //Clock
+    input                    reset,         //High to reset processor
 
-    output  [31:0]      mem_addr,           //Address Bus
-    output wire [31:0] mem_wdata,           //Data to be writtien
-    input  wire [31:0] mem_rdata,           //Input lines for both data and instr
-    
-    input wire         mem_rbusy,           //asserted if memeory is busy reading value 
-    input wire         mem_wbusy            //asserted if memory is busy writing values
+    input  wire [31:0]      in_data,        //Word Read From Memory
+    output reg  [31:0]     out_data,        //Word to store in memory
+    output reg [31:0]  out_mem_addr,        //Memory Access address
+
+    output reg               mem_wr,        //Memory Write
+    output reg               mem_rd         //Memory Read
 );
     parameter ADDR_WIDTH = 32;              //width of the the address bus
 
@@ -31,7 +32,7 @@ module rv32
     //The Latched Instruction
     reg [31:0] instr;
 
-    //Program Counter in Normal Operation
+    //Program Counter in Normal Operation (Do we need to do this directly?)
     wire [ADDR_WIDTH - 1:0] PCplus4 = PC + 4;
 
     ///////////////////////////////////////////////////////////////////
@@ -53,9 +54,9 @@ module rv32
         .instr(instr),                   //The instruction to be deocded 
    
         .writeBackEn(writeBackEn),      //Asserted when writing to a reg
-        .writeBackRegId(writeBackRegId),//The register to be written back
-        .inRegId1(RegId1),              //Register output 1
-        .inRegId2(RegId2),              //Register output 2
+        .rd(writeBackRegId),            //The register to be written back
+        .rs1(RegId1),                   //Register output 1
+        .rs2(RegId2),                   //Register output 2
 
         .func3(func3),                  //Operation done by ALU
         .funcQual(funcQual),            //Operation Qualifier
@@ -63,7 +64,7 @@ module rv32
         .imm(imm)                       //Immediate Value decoded from the instruction
     );
 
-    ///////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
     // Register File
     ////////////////////////////////////////////////////////////////////
     
@@ -84,4 +85,66 @@ module rv32
         .data2(regOut2)                    //Data 2 from register 2
     );
 
+    ////////////////////////////////////////////////////////////////////
+    // ALU
+    ////////////////////////////////////////////////////////////////////
+
+    wire [31:0] aluout;
+    wire [31:0] aluIn1;
+    wire [31:0] aluIn2;
+
+    alu ALU
+    (   
+        .clk(clk),
+        .in1(aluIn1),
+        .in2(aluIn2),
+        .func3(func3),          // Control Signal op: [14:12]
+        .opequal(funcQual),     // Operation Qualification (+/-, Logical/Arithmetic)
+        .out(aluout)            // ALU result
+    );
+
+    ////////////////////////////////////////////////////////////////////
+    // The State Machine
+    ////////////////////////////////////////////////////////////////////
+    
+    // The states, using 1-hot encoding (reduces both LUT count and critical path).
+    reg [4:0] state;
+
+    always @(posedge clk) begin
+        state <= 0;
+        mem_wr <= 0;
+        mem_rd <= 0;
+
+        //Reset Condition
+        if (reset) begin
+            state[0] <= 1'b1;
+            PC      <= 32'b0;    
+        end
+        else begin 
+            case(1'b1)
+                //-------------------------Fetch----------------------------------
+                state[0]: begin         
+                    out_mem_addr <= PC;
+                    mem_rd       <=  1;
+                    state[1]     <=  1;
+                end
+                //-------------------------Delay----------------------------------                
+                state[1]: begin         
+                    state[2]     <=  1;
+                end
+                //-------------------------Decode----------------------------------   
+                state[2]: begin
+                    instr        <= in_data;
+                    state[3]     <=  1;
+                end  
+                //-------------------------Execute----------------------------------   
+                state[3]: begin
+                    PC <= PCplus4;
+                    writeBackData <= aluout;
+                    state[0]     <=  1;
+                end  
+                default: state[0] <= 1;     
+            endcase
+        end
+    end
 endmodule 
