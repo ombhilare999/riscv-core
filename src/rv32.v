@@ -68,11 +68,13 @@ module rv32
     // Register File
     ////////////////////////////////////////////////////////////////////
     
-    wire writeBack; // asserted if register write back is done.
+    wire writeBack;                     // asserted if register write back is done.
     reg  [31:0] writeBackData;
     wire [31:0] regOut1;
     wire [31:0] regOut2;
 
+    assign writeBack = writeBackEn;
+    
     register_file regs
     (     
         .clock(clk),                       //Clock for register 
@@ -90,8 +92,8 @@ module rv32
     ////////////////////////////////////////////////////////////////////
 
     wire [31:0] aluout;
-    wire [31:0] aluIn1;
-    wire [31:0] aluIn2;
+    reg [31:0] aluIn1;
+    reg [31:0] aluIn2;
 
     alu ALU
     (   
@@ -141,6 +143,8 @@ module rv32
                 state[3]: begin
                     PC <= PCplus4;
                     writeBackData <= aluout;
+                    aluIn1 <= regOut1;
+                    aluIn2 <= regOut2;
                     state[0]     <=  1;
                 end  
                 default: state[0] <= 1;     

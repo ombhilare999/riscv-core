@@ -8,11 +8,14 @@
 
 `include "rv32.v"                   
 `include "memory.v"                   
+`include "macros.v"
 
-module rv32_soc();
+module rv32_soc
+(
+    input clk,
+    input reset
+);
 
-wire clk;
-wire reset;
 wire [31:0] i_data, o_data;
 wire mem_wr, mem_rd;
 wire [31:0] PC;

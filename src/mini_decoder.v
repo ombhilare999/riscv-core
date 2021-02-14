@@ -56,5 +56,17 @@ module mini_decoder
             funcQual = instr[30];         
         end
     end
+
+    //-----------------------------For Debug---------------------------------
     
+    `ifdef DEBUG
+        always @(*) begin 
+             $display("instr: %b", instr);
+            $display("Destination Register:%b", rd);
+            $display("Source Register: %b", rs1);
+            $display("Source Register: %b", rs2);
+            $display("Func3 : %b", func3);
+        end  
+    `endif
+
 endmodule 

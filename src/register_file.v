@@ -4,6 +4,7 @@
 //        Two Combinational Read  
 //        One clocked Write
 ///////////////////////////////////////////
+`include "macros.v"
 
 module register_file 
 (     
@@ -30,4 +31,24 @@ module register_file
             end
         end
     end 
+
+    //-----------------------------For Debug---------------------------------
+    
+    `ifdef DEBUG
+        integer i;
+
+        initial begin
+        RF[0] <= 32'h0000_0000;
+        RF[1] <= 32'h0000_0005;
+        RF[2] <= 32'h0000_0003;
+        end
+
+        always @(*) begin 
+            $display("REGISTER FILE:");
+            for(i = 0; i<32; i++) begin 
+                $display("R[%d]     ::      %d", i, RF[i]);
+            end
+            $display("\n\n");
+        end  
+    `endif
 endmodule
