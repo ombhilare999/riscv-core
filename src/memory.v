@@ -30,12 +30,16 @@ module memory
     
     `ifdef DEBUG
         initial begin
-            //Add (00104083)
-            memory [0] = 32'h002081B3;  //func7_rs2_rs1_func3_rd_opcode
-            memory [1] = 32'd0;
-            memory [2] = 32'd2;
-            //Subtract
-            memory [4] = 32'h402081B3;  //func7_rs2_rs1_func3_rd_opcode
+            memory [0] = 32'h002081B3;  //Add
+            memory [1] = 32'h402081B3;  //Subtract
+            memory [2] = 32'h002091B3;  //sll
+            memory [3] = 32'h0020A1B3;  //slt
+            memory [4] = 32'h0020B1B3;  //sltu
+            memory [5] = 32'h0020C1B3;  //xor
+            memory [6] = 32'h0020D1B3;  //srl
+            memory [7] = 32'h4020D1B3;  //sra
+            memory [8] = 32'h0020E1B3;  //or 
+            memory [9] = 32'h0020F1B3;  //and
         /*    $display("Zeroth Location   :: %b", memory[0]);
             $display("First Location    :: %b", memory[1]);
             $display("Second Location   :: %b", memory[2]);

@@ -22,7 +22,7 @@ end
 initial begin
     #5 reset = 1'b1;
     #5 reset = 1'b0;
-    #100 $finish;
+    #1000 $finish;
 end
 
 initial

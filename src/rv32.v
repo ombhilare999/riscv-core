@@ -32,21 +32,27 @@ module rv32
     //The Latched Instruction
     reg [31:0] instr;
 
-    //Program Counter in Normal Operation (Do we need to do this directly?)
-    wire [ADDR_WIDTH - 1:0] PCplus4 = PC + 4;
+    //Program Counter in Normal Operation
+    wire [ADDR_WIDTH - 1:0] PCplus4 = PC + 1;
 
     ///////////////////////////////////////////////////////////////////
     // Instruction Decoding
     ////////////////////////////////////////////////////////////////////
-    
-    wire          writeBackEn;          //Asserted when writing to a reg
+
     wire [4:0] writeBackRegId;          //The register to be written back
     wire [4:0]         RegId1;          //Register output 1
     wire [4:0]         RegId2;          //Register output 2
     
-
     wire [2:0] 	        func3;          // operation done by the ALU, tests, load/store mode
     wire 	         funcQual;          // 'qualifier' used by some operations (+/-, logic/arith shifts)
+
+    wire          writeBackEn;          //Asserted when writing to a reg
+    wire              alusel1;          //   alu sel1        alusel 2  
+    wire              alusel2;          // 0  : Register   0  : Register
+                                        // 1  :    PC      1  :    imm 
+
+    wire                isALU;          //Asserted for ALU opeartion
+
     wire [31:0] 	      imm;          // immediate value decoded from the instruction
 
     mini_decoder decoder
@@ -60,7 +66,12 @@ module rv32
 
         .func3(func3),                  //Operation done by ALU
         .funcQual(funcQual),            //Operation Qualifier
-   
+
+        .alusel1(alusel1),              //Selectes whether input to ALU is PC, Registers or IMM
+        .alusel2(alusel2),
+
+        .isALU(isALU),                  //Asserted for ALU opeartion           
+
         .imm(imm)                       //Immediate Value decoded from the instruction
     );
 
