@@ -44,6 +44,10 @@ module register_file
         end
 
         always @(*) begin 
+            $display("");
+            $display("");
+            $display("Write Data: %d",writedata);
+            $display("Write reg:  %d",writereg);
             $display("REGISTER FILE:");
             for(i = 0; i<32; i++) begin 
                 $display("R[%d]     ::      %d", i, RF[i]);

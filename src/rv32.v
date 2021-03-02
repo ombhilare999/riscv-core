@@ -58,7 +58,7 @@ module rv32
     mini_decoder decoder
     (
         .instr(instr),                   //The instruction to be deocded 
-   
+        
         .writeBackEn(writeBackEn),      //Asserted when writing to a reg
         .rd(writeBackRegId),            //The register to be written back
         .rs1(RegId1),                   //Register output 1
@@ -121,7 +121,7 @@ module rv32
     ////////////////////////////////////////////////////////////////////
     
     // The states, using 1-hot encoding (reduces both LUT count and critical path).
-    reg [4:0] state;
+    reg [5:0] state;
 
     always @(posedge clk) begin
         state <= 0;
@@ -134,6 +134,7 @@ module rv32
             PC      <= 32'b0;    
         end
         else begin 
+            (* parallel_case, full_case *)
             case(1'b1)
                 //-------------------------Fetch----------------------------------
                 state[0]: begin         
@@ -150,14 +151,23 @@ module rv32
                     instr        <= in_data;
                     state[3]     <=  1;
                 end  
-                //-------------------------Execute----------------------------------   
+                //------------------Fetch_ALU_Operands-----------------------------
                 state[3]: begin
+                    aluIn1 <= alusel1 ? PC   : regOut1;
+	                aluIn2 <= alusel2 ? imm  : regOut2;
+                    state[4]     <=  1;
+                end 
+                /*-------------------------WaitALU---------------------------------
+                state[4]: begin                
+                    state[5]     <=  1;
+                end  */ 
+                //--------------------------Execute---------------------------------
+                state[4]: begin
                     PC <= PCplus4;
-                    writeBackData <= aluout;
-                    aluIn1 <= regOut1;
-                    aluIn2 <= regOut2;
+                    writeBackData <= aluout; 
                     state[0]     <=  1;
-                end  
+                end               
+                                  
                 default: state[0] <= 1;     
             endcase
         end

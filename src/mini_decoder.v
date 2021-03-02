@@ -103,6 +103,7 @@ module mini_decoder
             $display("Source Register: %b", rs1);
             $display("Source Register: %b", rs2);
             $display("Func3 : %b", func3);
+            $display("imm : %b", imm);
         end  
     `endif
 
