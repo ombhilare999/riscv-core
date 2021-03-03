@@ -30,17 +30,15 @@ module memory
     
     `ifdef DEBUG
         initial begin
-            memory [0] = 32'h002081B3;  //Add
-            memory [1] = 32'h402081B3;  //Subtract
-            memory [2] = 32'h00108213;  //Addi
-            //memory [2] = 32'h002091B3;  //sll
-            //memory [3] = 32'h0020A1B3;  //slt
-            //memory [4] = 32'h0020B1B3;  //sltu
-            //memory [5] = 32'h0020C1B3;  //xor
-            //memory [6] = 32'h0020D1B3;  //srl
-            //memory [7] = 32'h4020D1B3;  //sra
-            //memory [8] = 32'h0020E1B3;  //or 
-            //memory [9] = 32'h0020F1B3;  //and
+            memory [0] = 32'h66618213;           //addi	tp,gp,1638
+            memory [1] = 32'h6661a213;           //slti	tp,gp,1638
+            memory [2] = 32'h6661b213;           //sltiu tp,gp,1638
+            memory [3] = 32'h6661c213;           //xori	tp,gp,1638
+            memory [4] = 32'h6661e213;           //ori	tp,gp,1638
+            memory [5] = 32'h6661f213;           //andi	tp,gp,1638
+            memory [6] = 32'h00619213;           //slli	tp,gp,0x6
+            memory [7] = 32'h0061d213;           //srli	tp,gp,0x6
+            memory [8] = 32'h4061d213;           //srai	tp,gp,0x6
         end
     `endif
 endmodule

@@ -39,8 +39,8 @@ module register_file
 
         initial begin
         RF[0] <= 32'h0000_0000;
-        RF[1] <= 32'h0000_0005;
-        RF[2] <= 32'h0000_0003;
+        RF[3] <= 32'h0000_0005;
+        RF[4] <= 32'h0000_0003;
         end
 
         always @(*) begin 

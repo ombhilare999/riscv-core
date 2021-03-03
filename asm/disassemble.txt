@@ -1,0 +1,16 @@
+
+isa_test.o:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	66618213          	addi	tp,gp,1638
+   4:	6661a213          	slti	tp,gp,1638
+   8:	6661b213          	sltiu	tp,gp,1638
+   c:	6661c213          	xori	tp,gp,1638
+  10:	6661e213          	ori	tp,gp,1638
+  14:	6661f213          	andi	tp,gp,1638
+  18:	00619213          	slli	tp,gp,0x6
+  1c:	0061d213          	srli	tp,gp,0x6
+  20:	4061d213          	srai	tp,gp,0x6
