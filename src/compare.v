@@ -7,12 +7,13 @@
 
 module compare
 (
+    input        clk,
     input [31:0] in1,
     input [31:0] in2,
     input [2:0]   op,
     output reg out
 );
-    always @(*) begin
+    always @(posedge clk) begin
         case(op)
             3'b000:  out = (in1 == in2);                        // BEQ
             3'b001:  out = (in1 != in2);                        // BNE

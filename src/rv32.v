@@ -52,7 +52,7 @@ module rv32
                                         // 1  :    PC      1  :    imm 
 
     wire                isALU;          //Asserted for ALU opeartion
-
+    wire             isBRANCH;          //Asserted for Branch Operation
     wire [31:0] 	      imm;          // immediate value decoded from the instruction
 
     mini_decoder decoder
@@ -71,6 +71,7 @@ module rv32
         .alusel2(alusel2),
 
         .isALU(isALU),                  //Asserted for ALU opeartion           
+        .isBRANCH(isBRANCH),
 
         .imm(imm)                       //Immediate Value decoded from the instruction
     );
@@ -114,6 +115,21 @@ module rv32
         .func3(func3),          // Control Signal op: [14:12]
         .opequal(funcQual),     // Operation Qualification (+/-, Logical/Arithmetic)
         .out(aluout)            // ALU result
+    );
+
+    ////////////////////////////////////////////////////////////////////
+    // Compare Block for Branch Instructions
+    ////////////////////////////////////////////////////////////////////
+
+    wire compare_out;
+
+    compare COMPARE
+    (   
+        .clk(clk),
+        .in1(regOut1),
+        .in2(regOut2),
+        .op(func3),
+        .out(compare_out)
     );
 
     ////////////////////////////////////////////////////////////////////
@@ -163,7 +179,7 @@ module rv32
                 end  */ 
                 //--------------------------Execute---------------------------------
                 state[4]: begin
-                    PC <= PCplus4;
+                    PC <= (isBRANCH & compare_out) ? aluout : PCplus4;
                     writeBackData <= aluout; 
                     state[0]     <=  1;
                 end               

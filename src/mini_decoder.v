@@ -22,7 +22,8 @@ module mini_decoder
    output reg               alusel2,         // 0  : Register   0  : Register
                                              // 1  :    PC      1  :    imm 
 
-   output reg                 isALU,         // Status signal for ALU operation
+   output reg                 isALU,         // Control signal for ALU operation
+   output reg              isBRANCH,         // Control signal for Branch operation
    output reg [31:0]            imm          //Immediate Value decoded from the instruction
 );
 
@@ -36,9 +37,9 @@ module mini_decoder
 
     //Five Immediate formats:
     wire [31:0] Iimm = {{21{instr[31]}}, instr[30:20]}; 
+    wire [31:0] Bimm = {{20{instr[31]}}, instr[7], instr[30:25], instr[11:8], 1'b0};
+    //wire [31:0] Jimm = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0}; 
     //wire [31:0] Simm = {{21{instr[31]}}, instr[30:25], instr[11:7]};
-    //wire [31:0] Bimm = {{20{instr[31]}}, instr[7], instr[30:25], instr[11:8], 1'b0};
-    //wire [31:0] Jimm = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0};   
     //wire [31:0] Uimm = {instr[31], instr[30:12], {12{1'b0}}};
     
 
@@ -61,8 +62,9 @@ module mini_decoder
 
     always @(*) begin  
 
-        isALU    = 1'b0;
-        funcQual = 1'b0;
+        isALU       = 1'b0;
+        isBRANCH    = 1'b0;
+        funcQual    = 1'b0;
 
         alusel1  = 1'bx;
         alusel2  = 1'bx;
@@ -77,7 +79,6 @@ module mini_decoder
                 writeBackEn =   1'b1;   //Enables write Back
                 funcQual    = funcisshift ? instr[30] : 1'b0;   
                 isALU       =   1'b1;   //ALU operation
-
                 alusel1     =   1'b0;   //ALU source 1: register
                 alusel2     =   1'b1;   //ALU source 2: Immediate
                 imm = Iimm;             // imm format = I
@@ -87,9 +88,15 @@ module mini_decoder
                 writeBackEn =   1'b1;   //Enables write Back
                 funcQual = instr[30];   //Function Qualifier
                 isALU       =   1'b1;   //ALU opearation
-
                 alusel1     =   1'b0;   //ALU source 1: register
                 alusel2     =   1'b0;   //ALU source 2: register
+            end
+
+            5'b11000: begin   // Branch operation: PC + imm_b
+                isBRANCH    =   1'b1;   //Branch opearation
+                alusel1     =   1'b1;   //ALU source 1: pc
+                alusel2     =   1'b1;   //ALU source 2: imm
+                imm = Bimm;             // imm format = I
             end
         endcase
     end
